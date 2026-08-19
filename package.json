@@ -1,0 +1,14 @@
+{
+  "name": "cicd-sample",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "npm run build",
+    "start": "node dist/index.js"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}
