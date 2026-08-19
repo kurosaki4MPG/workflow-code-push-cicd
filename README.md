@@ -103,7 +103,6 @@ jobs:
 7. `Enforcement status` を `Active` にする
 8. `Target branches` の `Include by pattern` で `main` と入力する
 9. `Branch rules` で次を有効にする（すでに有効になっている項目はそのまま）
-   - `Restrict updates`
    - `Require a pull request before merging`
    - `Require status checks to pass`
      - `Require branches to be up to date before merging`
@@ -111,7 +110,7 @@ jobs:
    - `Restrict deletions`
 10. `Require status checks to pass` の `Add checkes` で `build` を指定する
 11. 必要なら `Require branches to be up to date before merging` を有効にする
-12. このままだとプルリクでマージする際もブロックされてしまうので、マージを許可するユーザーを `Bypass list` 追加する
+12. `Bypass list` に不要な権限が入っていないか確認する
 13. `Create` を押して保存する
 
 ### 設定の意味
