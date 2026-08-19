@@ -89,6 +89,61 @@ jobs:
 4. workflow が失敗することを確認する
 5. ruleset で `build` が必須 status check になっていることを確認する
 
+## GitHub ruleset の設定方法
+
+このリポジトリでは、`main` への直接 push と、エラーのある変更の merge を GitHub 側で止めるために branch ruleset を使います。  
+`push ruleset` ではなく **branch ruleset** を作るのがポイントです。
+
+1. GitHub で対象リポジトリを開く
+2. `Settings` を開く
+3. 左メニューの `Rulesets` から `Rulesets` を開く
+4. `New ruleset` を押す
+5. `New branch ruleset` を選ぶ
+6. `Ruleset name` に分かりやすい名前を入れる
+7. `Enforcement status` を `Active` にする
+8. `Target branches` の `Include by pattern` で `main` と入力する
+9. `Branch rules` で次を有効にする（すでに有効になっている項目はそのまま）
+   - `Restrict updates`
+   - `Require a pull request before merging`
+   - `Require status checks to pass`
+     - `Require branches to be up to date before merging`
+   - `Block force pushes`
+   - `Restrict deletions`
+10. `Require status checks to pass` の `Add checkes` で `build` を指定する
+11. 必要なら `Require branches to be up to date before merging` を有効にする
+12. `Bypass list` に不要な権限が入っていないか確認する
+13. `Create` を押して保存する
+
+### 設定の意味
+
+- `Restrict updates`
+  - `main` への直接 push を止める
+- `Require a pull request before merging`
+  - `main` への反映を PR 経由にする
+- `Require status checks to pass`
+  - `build` が成功するまで実行を止める
+- `Require branches to be up to date before merging`
+  - base branch の最新内容を取り込んだ状態で merge させる
+- `Block force pushes`
+  - 強制 push を防ぐ
+- `Restrict deletions`
+  - ブランチ削除を防ぐ
+
+### うまく止まらないときの確認点
+
+1. ruleset が `Active` になっているか
+2. 対象ブランチが `main` になっているか
+3. `Bypass list` に自分が入っていないか
+4. `build` が workflow の job 名と一致しているか
+5. `push ruleset` を作っていないか
+
+### 期待される結果
+
+- `main` への direct push は拒否される
+- PR は作成できる
+- `build` が失敗している PR は merge できない
+- `build` が成功しない限り、`main` に反映されない
+
 ## 期待される関係
 
 - `ci.yml` が `npm run check` を実行する
