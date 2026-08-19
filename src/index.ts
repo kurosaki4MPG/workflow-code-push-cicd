@@ -9,7 +9,7 @@ function formatGreeting(user: SampleUser): string {
 
 const user: SampleUser = {
   name: "Codex",
-  role: "learner",
+  role: "manager",
 };
 
 console.log(formatGreeting(user));
